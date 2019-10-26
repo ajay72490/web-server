@@ -5,7 +5,7 @@ const express = require('express')
 const hbs = require('hbs')
 
 const app = express()
-
+const port = process.env.PORT || 3001
 //Define path for express config
 const publicDirectoryPath = path.join(__dirname, '../public') 
 const viewsPath = path.join(__dirname, '../templates/views')
@@ -87,7 +87,7 @@ app.get('*', (req, res) => {
     })
 })
 
-app.listen(3001,() => {
-    console.log('Server has started has successfully')
+app.listen(port, () => {
+    console.log('Server has started has successfully at port '+port)
 })
 
