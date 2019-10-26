@@ -11,7 +11,7 @@ const forecast = (latitude,longitude,callback) =>{
             callback('Unable to find location,Search for any other location',undefined)
         }
         else{
-            callback(undefined,body.daily.summary+'The termperature is '+body.currently.temperature+' degree and '+body.currently.precipProbability+'% chances of rain')
+            callback(undefined,body.daily.summary+'.Highest temperature today '+body.daily.data[0].temperatureHigh +" degrees."+'The current termperature is '+body.currently.temperature+' degree and '+body.currently.precipProbability+'% chances of rain')
         }
     })
 }
