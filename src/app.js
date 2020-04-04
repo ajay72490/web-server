@@ -111,6 +111,8 @@ app.get('*', (req, res) => {
     })
 })
 
+console.log(process.env.FORECAST_API_KEY)
+
 app.listen(port, () => {
     console.log('Server has started has successfully at port '+port)
 })

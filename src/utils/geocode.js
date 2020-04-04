@@ -2,7 +2,7 @@ const request = require("request")
 
 const geocode = (address,callback) => {
 
-    const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+address+'.json?proximity=-74.70850,40.78375&access_token=pk.eyJ1IjoiYWpheTQyNTgiLCJhIjoiY2sweG1mZnNoMDZzODNucHJ1c3htYmtxbiJ9.iIt7YkuhuEtv4UFbnNwlLA&limit=1'
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?proximity=-74.70850,40.78375&access_token=${process.env.GEOCODE_API_KEY}&limit=1`
     request({ url, json: true },(error, { body })=>{
         if(error){
             callback("Cannot connect to location services",undefined)
@@ -26,7 +26,7 @@ const reverseGeocode = ({ latitude, longitude }, callback) => {
         callback("Something went wrong please try again.")
     }
 
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/ambernath.json?proximity=${latitude},${longitude}&access_token=pk.eyJ1IjoiYWpheTQyNTgiLCJhIjoiY2sweG1mZnNoMDZzODNucHJ1c3htYmtxbiJ9.iIt7YkuhuEtv4UFbnNwlLA&limit=1`
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/ambernath.json?proximity=${latitude},${longitude}&access_token=${process.env.GEOCODE_API_KEY}&limit=1`
     
 
     request({ url, json: true }, (error, { body }) => {
