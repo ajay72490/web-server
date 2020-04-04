@@ -1,5 +1,5 @@
 const forecast = require('./utils/forecast')
-const geocode = require('./utils/geocode')
+const { geocode, reverseGeocode } = require('./utils/geocode')
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
@@ -7,7 +7,7 @@ const hbs = require('hbs')
 const app = express()
 const port = process.env.PORT || 3001
 //Define path for express config
-const publicDirectoryPath = path.join(__dirname, '../public') 
+const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
 
@@ -48,10 +48,35 @@ app.get('/weather',(req,res) => {
         })
     }
     const address = req.query.address
-    geocode(address, (error, {latitude, longitude, location} = {}) => {
+    geocode(address, (error, { latitude, longitude, location } = {}) => {
         if(error){
             return res.send({
                 error: error
+            })
+        }
+        forecast(latitude, longitude, (error, foreCastData ) => {
+            if(error){
+                return res.send({
+                    error: error
+                })
+            }
+            res.send({
+                foreCastData,
+                location,
+                address
+            })
+        })
+    })
+})
+
+app.get("/weatherCords", (req, res) => {
+    const latitude = req.query.latitude
+    const longitude = req.query.longitude
+
+    reverseGeocode({ latitude, longitude }, (error, { location } = {}) => {
+        if(error) {
+            return res.send({
+                error
             })
         }
         forecast(latitude, longitude, (error, foreCastData) => {
@@ -62,8 +87,7 @@ app.get('/weather',(req,res) => {
             }
             res.send({
                 foreCastData,
-                location,
-                address
+                location
             })
         })
     })
